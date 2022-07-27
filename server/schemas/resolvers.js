@@ -40,7 +40,7 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("No profile with this email found!");
+        throw new AuthenticationError("No user with this email found!");
       }
 
       const correctPw = await user.isCorrectPassword(password);
@@ -53,28 +53,29 @@ const resolvers = {
       return { token, user };
     },
 
-    updateBook: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { savedBooks: args } },
-          { new: true, runValidators: true }
-        );
-      }
+    updateBook: async (parent, { newBook }, context) => {
+      return User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { savedBooks: newBook } },
+        { new: true, runValidators: true }
+      );
+      //   if (context.user) {
+      //   }
 
-      throw new AuthenticationError("You need to be logged in!");
+      //   throw new AuthenticationError("You need to be logged in!");
     },
 
     deleteBook: async (parent, { bookId }, context) => {
-      if (context.user) {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { savedBooks: { bookId } } },
-          { new: true }
-        );
-      }
+      return User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $pull: { savedBooks: { bookId } } },
+        { new: true }
+      );
 
-      throw new AuthenticationError("You need to be logged in!");
+      //   if (context.user) {
+      //   }
+
+      //   throw new AuthenticationError("You need to be logged in!");
     },
 
     removeUser: async (parent, args, context) => {
