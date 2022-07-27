@@ -30,14 +30,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
 
-  // mongoose.connect(
-  //   process.env.MONGODB_URI || "mongodb://localhost:27017/googlebooks",
-  //   {
-  //     useNewUrlParser: true,
-  //     useUnifiedTopology: true,
-  //   }
-  // );
-
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
