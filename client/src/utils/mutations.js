@@ -23,15 +23,30 @@ export const LOGIN_USER = gql`
 `;
 
 export const UPDATE_BOOK = gql`
-  mutation Mutation($newBook: SavedBook!) {
-    updateBook(newBook: $newBook) {
+  mutation Mutation(
+    $userId: ID!
+    $bookId: String
+    $authors: [String]
+    $title: String
+    $description: String
+    $image: String
+  ) {
+    updateBook(
+      userId: $userId
+      bookId: $bookId
+      authors: $authors
+      title: $title
+      description: $description
+      image: $image
+    ) {
+      _id
       username
     }
   }
 `;
 
 export const DELETE_BOOK = gql`
-  mutation UpdateBook($bookId: ID!) {
+  mutation Mutation($bookId: ID!) {
     deleteBook(bookId: $bookId) {
       username
     }

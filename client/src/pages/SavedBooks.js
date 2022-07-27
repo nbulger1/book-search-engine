@@ -16,11 +16,15 @@ import { DELETE_BOOK } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
-const SavedBooks = ({ books, isLoggedInUser = false }) => {
+const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
 
-  const { loading, data } = useQuery(QUERY_ME);
-  const userData = data?.me || {};
+  const { userId } = useParams();
+  const { loading, data } = useQuery(userId ? QUERY_SINGLE_USER : QUERY_ME, {
+    variables: { userId: userId },
+  });
+  const userData = data?.me || data?.user || {};
+
   const [deleteBook, { error }] = useMutation(DELETE_BOOK);
 
   if (!userData) {

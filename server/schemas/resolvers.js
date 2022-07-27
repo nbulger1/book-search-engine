@@ -53,13 +53,21 @@ const resolvers = {
       return { token, user };
     },
 
-    updateBook: async (parent, { newBook }, context) => {
+    updateBook: async (
+      parent,
+      { userId, bookId, authors, title, description, image },
+      context
+    ) => {
+      //   if (context.user) {
       return User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { savedBooks: newBook } },
+        { _id: userId },
+        {
+          $addToSet: {
+            savedBooks: { bookId, authors, title, description, image },
+          },
+        },
         { new: true, runValidators: true }
       );
-      //   if (context.user) {
       //   }
 
       //   throw new AuthenticationError("You need to be logged in!");

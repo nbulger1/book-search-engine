@@ -16,7 +16,17 @@ import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 
 import { UPDATE_BOOK } from "../utils/mutations";
 
+import { useQuery } from "@apollo/client";
+import { QUERY_SINGLE_USER, QUERY_ME } from "../utils/queries";
+
+import { useParams } from "react-router-dom";
+
 const SearchBooks = () => {
+  const { userId } = useParams();
+  const { loading, data } = useQuery(userId ? QUERY_SINGLE_USER : QUERY_ME, {
+    variables: { userId: userId },
+  });
+  const userData = data?.me || data?.user || {};
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
@@ -69,6 +79,7 @@ const SearchBooks = () => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
+    console.log(bookToSave);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -76,10 +87,13 @@ const SearchBooks = () => {
       return false;
     }
 
+    console.log({ userId, ...bookToSave });
+
     try {
       const { data } = await updateBook({
-        variables: { ...bookToSave },
+        variables: { userId, ...bookToSave },
       });
+      console.log(data);
 
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
