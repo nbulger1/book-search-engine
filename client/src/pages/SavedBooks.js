@@ -19,11 +19,12 @@ import { removeBookId } from "../utils/localStorage";
 const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
 
-  const { userId } = useParams();
+  let { userId } = useParams();
   const { loading, data } = useQuery(userId ? QUERY_SINGLE_USER : QUERY_ME, {
     variables: { userId: userId },
   });
   const userData = data?.me || data?.user || {};
+  userId = userData._id;
 
   const [deleteBook, { error }] = useMutation(DELETE_BOOK);
 
