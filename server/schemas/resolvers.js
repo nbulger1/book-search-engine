@@ -22,7 +22,7 @@ const resolvers = {
 
     me: async (parent, args, context) => {
       if (context.user) {
-        return Profile.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -53,11 +53,11 @@ const resolvers = {
       return { token, user };
     },
 
-    updateBook: async (parent, { userId, body }, context) => {
+    updateBook: async (parent, args, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
-          { _id: userId },
-          { $addToSet: { savedBooks: body } },
+          { _id: context.user._id },
+          { $addToSet: { savedBooks: args } },
           { new: true, runValidators: true }
         );
       }
@@ -65,11 +65,11 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    deleteBook: async (parent, { userId, bookId }, context) => {
+    deleteBook: async (parent, { bookId }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
-          { _id: userId },
-          { $pull: { savedBooks: { bookId: bookId } } },
+          { _id: context.user._id },
+          { $pull: { savedBooks: { bookId } } },
           { new: true }
         );
       }
