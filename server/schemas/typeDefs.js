@@ -19,14 +19,6 @@ const typeDefs = gql`
     savedBooks: [Book]
   }
 
-  input SavedBook {
-    bookId: String
-    authors: [String]
-    title: String
-    description: String
-    image: String
-  }
-
   type Auth {
     token: ID!
     user: User
@@ -51,7 +43,7 @@ const typeDefs = gql`
       image: String
     ): User
     removeUser: User
-    deleteBook(bookId: ID!): User
+    deleteBook(userId: ID!, bookId: String): User
   }
 `;
 
