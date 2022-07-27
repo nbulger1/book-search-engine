@@ -55,7 +55,7 @@ const resolvers = {
 
     updateBook: async (
       parent,
-      { userId, bookId, authors, title, description, image },
+      { userId, bookId, authors, title, description, image, link },
       context
     ) => {
       if (context.user) {
@@ -63,7 +63,7 @@ const resolvers = {
           { _id: userId },
           {
             $addToSet: {
-              savedBooks: { bookId, authors, title, description, image },
+              savedBooks: { bookId, authors, title, description, image, link },
             },
           },
           { new: true, runValidators: true }
