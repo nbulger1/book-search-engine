@@ -41,7 +41,7 @@ export const QUERY_ALL_USERS = gql`
 `;
 
 export const QUERY_ME = gql`
-  query Query {
+  {
     me {
       _id
       username

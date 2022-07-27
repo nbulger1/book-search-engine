@@ -20,7 +20,7 @@ const SavedBooks = ({ books, isLoggedInUser = false }) => {
   // const [userData, setUserData] = useState({});
 
   const { loading, data } = useQuery(QUERY_ME);
-  const [userData, setUserData] = useState(loading ? null : data.me);
+  const userData = data?.me || {};
   const [deleteBook, { error }] = useMutation(DELETE_BOOK);
 
   if (!userData) {
@@ -91,11 +91,6 @@ const SavedBooks = ({ books, isLoggedInUser = false }) => {
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
-    }
-
-    removeBookId(bookId);
-    if (!books.length) {
-      return <h3>No Books Yet</h3>;
     }
 
     // try {
