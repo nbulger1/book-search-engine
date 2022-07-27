@@ -22,11 +22,12 @@ import { QUERY_SINGLE_USER, QUERY_ME } from "../utils/queries";
 import { useParams } from "react-router-dom";
 
 const SearchBooks = () => {
-  const { userId } = useParams();
+  let { userId } = useParams();
   const { loading, data } = useQuery(userId ? QUERY_SINGLE_USER : QUERY_ME, {
     variables: { userId: userId },
   });
   const userData = data?.me || data?.user || {};
+  userId = userData._id;
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
