@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Jumbotron,
   Container,
@@ -18,8 +18,10 @@ const SavedBooks = () => {
   const { loading, data } = useQuery(userId ? QUERY_SINGLE_USER : QUERY_ME, {
     variables: { userId: userId },
   });
+
   const userData = data?.me || data?.user || {};
   userId = userData._id;
+  useEffect(() => {}, [userId]);
 
   const [deleteBook, { error }] = useMutation(DELETE_BOOK);
 
