@@ -22,7 +22,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
-export const UPDATE_BOOK = gql`
+export const SAVE_BOOK = gql`
   mutation Mutation(
     $userId: ID!
     $bookId: String
@@ -31,7 +31,7 @@ export const UPDATE_BOOK = gql`
     $description: String
     $image: String
   ) {
-    updateBook(
+    saveBook(
       userId: $userId
       bookId: $bookId
       authors: $authors
