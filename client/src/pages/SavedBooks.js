@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Jumbotron,
   Container,
@@ -21,7 +21,13 @@ const SavedBooks = () => {
 
   const userData = data?.me || data?.user || {};
   userId = userData._id;
-  useEffect(() => {}, [userId]);
+
+  // noticed that I could not see the newly saved book if I saved a book and then went into my book collection without reloading --> spoke with other students who had a similar issue...this was my work around but I'm not sure if this was an issue I created or with the starter code that I couldn't fix
+  useEffect(() => {
+    if (Auth.loggedIn() && Auth.getProfile().data._id === userId) {
+      window.location.reload();
+    }
+  }, []);
 
   const [deleteBook, { error }] = useMutation(DELETE_BOOK);
 

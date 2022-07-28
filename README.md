@@ -82,7 +82,7 @@ To create the `resolvers.js` file within the `schemas` folder I used the user-co
 - me - queries the user's id that is logged in based on the authMiddleware context designated in the server file
 - addUser - creates a new user based on their username, email, and password
 - login - logs in a user by finding their email, confirming the password and creating a token
-- updateBook - saves a book to a User's file by taking in the user's ID as well as the book's information (bookId, authors, title, description, image, and/or link)
+- saveBook - saves a book to a User's file by taking in the user's ID as well as the book's information (bookId, authors, title, description, image, and/or link)
 - deleteBook - deletes a book by updated the user to remove the book by bookId
 - removeUser - finals a user by ID and deletes them
 
@@ -119,3 +119,13 @@ This project is protected under the MIT License.
 ## Link
 
 See the following for a link to the deployed application: https://book-search-engine-nbulger.herokuapp.com
+
+![GIF demonstrating functionality of the book search engine](./images/book-engine-demo.gif)
+
+## Side Note:
+
+I noticed that I could not see my newly saved books if I saved a book on the `searchBooks.js` page and clicked the button to view my saved books unless I reloaded the page a second time after the initial render.
+
+I spoke with other students and they found a similar issue. I created a `useEffect` work around in the `savedBooks.js` file that forces reload once I have the userId defined after the `QUERY_ME` query.
+
+That being said I recognize it is not the best solution, but I spent a decent amount of time trying to fix the bug and concluded that I wasn't sure if it was a starter code issue or a me issue, so I left my work around. The books are saving to the appropriate user and as long as the page is reloaded the user can see all of their saved books which is one of the acceptance criterias.
